@@ -30,7 +30,13 @@ For each step:
 4. Wait for user approval before coding if the user asked for Plan Mode.
 5. Implement only that step.
 6. Run the step's acceptance checks.
-7. Report:
+7. **Git commit and push:**
+   - Commit changes with message: `step [X]: [short description]`
+   - Create feature branch: `cursor/step-[X]-[description]-6507`
+   - Push to GitHub: `git push -u origin [branch-name]`
+   - Create draft PR with detailed description
+   - This allows step-by-step recovery and debugging
+8. Report:
    - files changed
    - commands run
    - test/check results
@@ -38,7 +44,8 @@ For each step:
    - what failed
    - what was not done
    - risks or assumptions
-8. Stop.
+   - branch name and PR link
+9. Stop.
 
 ## Output format after every step
 

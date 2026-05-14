@@ -335,19 +335,32 @@ Do not move on unless Cursor can answer these cleanly:
 
 If the answer is vague, force it to rerun checks.
 
-### Prompt 7 — GATE 7: COMMIT (only after PASS)
+### Prompt 7 — GATE 7: COMMIT AND PUSH (only after PASS)
 
-Create a git commit for PDR Step [X].
+Create a git commit and push for PDR Step [X].
 
 Before committing:
 - Show git status.
 - Show git diff --stat.
 - Confirm no secrets or local data files are being committed.
-- Use this commit message:
 
-step [X]: [short description]
+Commit and push workflow:
+1. Commit with message: `step [X]: [short description]`
+2. Create feature branch: `cursor/step-[X]-[description]-6507`
+3. Push to GitHub: `git push -u origin [branch-name]`
+4. Create draft PR with detailed step description
 
-After committing, show the commit hash and the next recommended PDR step.
+This ensures:
+- Each step is backed up to GitHub immediately
+- Step-by-step recovery is possible
+- Debugging can start from any specific step
+- Multiple agents can access the same incremental progress
+
+After pushing, show:
+- Commit hash
+- Branch name
+- PR link
+- Next recommended PDR step
 
 ### GATE 8: NEXT STEP (no paste prompt)
 
