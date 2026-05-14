@@ -29,13 +29,18 @@ For each step:
 3. Produce a short implementation plan.
 4. Wait for user approval before coding if the user asked for Plan Mode.
 5. Implement only that step.
-6. Run the step's acceptance checks.
+6. **Run verification (REQUIRED):**
+   - Run the step's acceptance checks from the PDR
+   - Answer all 10 manual check questions (see below)
+   - Consider using verifier subagent for independent review
+   - Fix any issues found, then re-verify until PASS
 7. **Git commit and push:**
    - Commit changes with message: `step [X]: [short description]`
    - Create feature branch: `cursor/step-[X]-[description]-6507`
    - Push to GitHub: `git push -u origin [branch-name]`
-   - Create draft PR with detailed description
-   - This allows step-by-step recovery and debugging
+   - **REQUIRED: Create draft PR with detailed description** (use ManagePullRequest tool)
+   - **REQUIRED: Include PR link in Step Result report**
+   - This allows step-by-step recovery, debugging, and user review
 8. Report:
    - files changed
    - commands run
@@ -44,8 +49,35 @@ For each step:
    - what failed
    - what was not done
    - risks or assumptions
-   - branch name and PR link
+   - **REQUIRED: branch name and PR link**
 9. Stop.
+
+**ENFORCEMENT:** You MUST NOT mark a step as complete or move to the next step until:
+- ✅ All acceptance checks pass
+- ✅ **10 manual check questions answered** (see below)
+- ✅ Changes are committed
+- ✅ Feature branch is pushed to GitHub
+- ✅ **Draft PR is created** (not optional)
+- ✅ PR link is included in the Step Result report
+
+If you skip the PR creation step or manual checks, the workflow is violated and the step is NOT complete.
+
+## Required manual check questions (answer before commit)
+
+Before committing any PDR step, you MUST answer these 10 questions:
+
+1. What exact files changed?
+2. Why did each changed file need to change?
+3. What commands did you run?
+4. What was the output of the checks?
+5. Which acceptance criteria passed?
+6. Which acceptance criteria failed or were skipped?
+7. Did you add any custom RAG code?
+8. Did you add any paid API dependency?
+9. Can this step be reproduced from a clean clone?
+10. What should I manually click/test before moving on?
+
+Include these answers in your Step Result report.
 
 ## Output format after every step
 
@@ -71,7 +103,24 @@ Acceptance checks:
 Evidence:
 ...
 
-Manual check for user:
+**Git workflow completed:**
+- Branch: [branch-name]
+- Commit: [commit-hash]
+- **PR: [PR-URL]** ← REQUIRED
+
+**Manual check answers:**
+1. Files changed: ...
+2. Why each file changed: ...
+3. Commands run: ...
+4. Output of checks: ...
+5. Criteria passed: ...
+6. Criteria failed/skipped: ...
+7. Custom RAG code added: YES/NO
+8. Paid API dependency added: YES/NO
+9. Reproducible from clean clone: YES/NO
+10. Manual testing needed: ...
+
+Additional manual check for user:
 ...
 
 Known risks:

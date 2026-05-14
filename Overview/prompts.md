@@ -2,7 +2,7 @@
 
 This document is the **commander framework** for taking an agent through the Local RAG MVP PDR **one step at a time**. Use **Plan Mode** before implementation, **Project Rules** / `AGENTS.md` for persistent guardrails, and a **verifier subagent** for independent checks (per Cursor docs on rules, Plan Mode, and subagents).
 
-**Operating principle:** one PDR step → plan → implement → verify → manual check → commit → next step. Do **not** tell Cursor to build the whole PDR at once; that leads to wandering, overbuilding, and skipped checks.
+**Operating principle:** one PDR step → plan → implement → verify → manual check → commit → push → **create PR** → next step. Do **not** tell Cursor to build the whole PDR at once; that leads to wandering, overbuilding, and skipped checks.
 
 **Gates for every PDR step (order):**
 
@@ -12,7 +12,7 @@ This document is the **commander framework** for taking an agent through the Loc
 4. VERIFY  
 5. FIX IF NEEDED  
 6. MANUAL CHECK  
-7. COMMIT  
+7. COMMIT + PUSH + **CREATE PR**  
 8. NEXT STEP  
 
 **Rule:** Cursor is not allowed to move to the next PDR step until the current step passes.
@@ -48,7 +48,7 @@ This document is the **commander framework** for taking an agent through the Loc
 
 **Unique paste prompts in this file:** **Prompt 1** through **Prompt 11** (eleven definitions). **Group 2** reuses Prompts **2–7** on every PDR step; **Group 1** uses Prompt **1** once.
 
-**Gate mapping:** Prompt 2 = PLAN · Prompt 3 = APPROVE (+ kicks off IMPLEMENT) · Prompt 4 = VERIFY · Prompt 5 = FIX IF NEEDED · Prompt 6 = MANUAL CHECK · Prompt 7 = COMMIT · then NEXT STEP (no paste).
+**Gate mapping:** Prompt 2 = PLAN · Prompt 3 = APPROVE (+ kicks off IMPLEMENT) · Prompt 4 = VERIFY · Prompt 5 = FIX IF NEEDED · Prompt 6 = MANUAL CHECK · Prompt 7 = COMMIT + PUSH + CREATE PR · then NEXT STEP (no paste).
 
 ### Prompt catalog (all **11** paste prompts)
 
@@ -335,26 +335,50 @@ Do not move on unless Cursor can answer these cleanly:
 
 If the answer is vague, force it to rerun checks.
 
-### Prompt 7 — GATE 7: COMMIT AND PUSH (only after PASS)
+### Prompt 7 — GATE 7: COMMIT, PUSH, AND CREATE PR (only after PASS)
 
-Create a git commit and push for PDR Step [X].
+Create a git commit, push to GitHub, and create a draft PR for PDR Step [X].
 
-Before committing:
-- Show git status.
-- Show git diff --stat.
-- Confirm no secrets or local data files are being committed.
+**Required workflow:**
 
-Commit and push workflow:
-1. Commit with message: `step [X]: [short description]`
-2. Create feature branch: `cursor/step-[X]-[description]-6507`
-3. Push to GitHub: `git push -u origin [branch-name]`
-4. Create draft PR with detailed step description
+1. **Before committing:**
+   - Show git status
+   - Show git diff --stat
+   - Confirm no secrets or local data files are being committed
+
+2. **Create commit:**
+   - Use commit message format: `step [X]: [short description]`
+   - Example: `step 3: add Ollama setup script`
+
+3. **Create and push feature branch:**
+   - Branch name format: `cursor/step-[X]-[description]-6507`
+   - Push to GitHub: `git push -u origin [branch-name]`
+
+4. **REQUIRED: Create draft PR:**
+   - Use ManagePullRequest tool with action="create_pr"
+   - Set draft=true
+   - Include detailed PR body with:
+     - PDR step description
+     - Files changed
+     - Acceptance checks (with ✅ or ❌)
+     - Testing performed
+     - Next step reference
+   - Base branch: main (or as specified by user)
+
+5. **Report:**
+   - Commit hash
+   - Branch name
+   - **PR URL** ← REQUIRED in response
+   - Next recommended PDR step
+
+**CRITICAL:** The step is NOT complete until the PR is created. Do not skip PR creation.
 
 This ensures:
 - Each step is backed up to GitHub immediately
 - Step-by-step recovery is possible
 - Debugging can start from any specific step
 - Multiple agents can access the same incremental progress
+- **User can review changes via PR before merge** ← This was missing in Steps 0-1
 
 After pushing, show:
 - Commit hash
