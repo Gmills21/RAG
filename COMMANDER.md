@@ -25,13 +25,21 @@ Run these prompts in order:
 3. **Prompt 4** — VERIFY: Use verifier subagent to check work
 4. **Prompt 5** — FIX (only if verify fails): Minimal fix, then re-verify
 5. **Prompt 6** — MANUAL CHECK: Answer 10 questions about the work
-6. **Prompt 7** — COMMIT AND PUSH: Create commit, branch, push to GitHub, create draft PR
+6. **Prompt 7** — COMMIT, PUSH, AND CREATE PR: Create commit, feature branch, push to GitHub, **create draft PR**
 
-**Important:** Each step MUST be pushed to GitHub immediately after completion. This ensures:
+**Critical:** Each step MUST include all of the following before moving to the next step:
+- ✅ Git commit with proper message format: `step [X]: [short description]`
+- ✅ Feature branch created: `cursor/step-[X]-[description]-6507`
+- ✅ Branch pushed to GitHub: `git push -u origin [branch-name]`
+- ✅ **Draft PR created** with detailed description showing acceptance checks
+- ✅ PR link documented in progress table above
+
+**Why this matters:**
 - Step-by-step recovery if something breaks
 - Multiple agents can see all progress
 - Easy debugging by checking out specific step branches
 - Incremental backup of all work
+- **User can review changes via PR before merge** ← This was skipped for Steps 0-1
 
 Then move to next step.
 
@@ -47,32 +55,32 @@ Then move to next step.
 
 ## PDR Step Progress
 
-| Step | Status | Description | Branch | PR |
-|------|--------|-------------|--------|-----|
-| 0 | ✅ COMPLETE | Commander framework setup | cursor/step-0-commander-framework-6507 | - |
-| 1 | ✅ COMPLETE | Create wrapper repo skeleton | cursor/step-1-wrapper-skeleton-6507 | - |
-| 2 | ✅ COMPLETE | Add Docker Compose for Kotaemon | cursor/step-2-docker-compose-6507 | #5 |
-| 3 | ⬜ PENDING | Add Ollama setup script |
-| 4 | ⬜ PENDING | Add Ollama smoke test script |
-| 5 | ⬜ PENDING | Add preflight script |
-| 6 | ⬜ PENDING | Add Makefile shortcuts |
-| 7 | ⬜ PENDING | Add sample support data |
-| 8 | ⬜ PENDING | Add support prompt pack |
-| 9 | ⬜ PENDING | Add ops, MSP/IT, and RFP prompt packs |
-| 10 | ⬜ PENDING | Add local setup docs |
-| 11 | ⬜ PENDING | Add Kotaemon model setup docs |
-| 12 | ⬜ PENDING | Add customer onboarding docs |
-| 13 | ⬜ PENDING | Add source quality checklist |
-| 14 | ⬜ PENDING | Add demo script |
-| 15 | ⬜ PENDING | Add acceptance tests doc |
-| 16 | ⬜ PENDING | Add eval question set |
-| 17 | ⬜ PENDING | Add document preparation script |
-| 18 | ⬜ PENDING | Add reset-local-data script |
-| 19 | ⬜ PENDING | Add troubleshooting guide |
-| 20 | ⬜ PENDING | Add pilot playbook |
-| 21 | ⬜ PENDING | Add data handling guide |
-| 22 | ⬜ PENDING | Update README as main control panel |
-| 23 | ⬜ PENDING | Full MVP run acceptance |
+| Step | Status | Description | Branch | PR | Notes |
+|------|--------|-------------|--------|-----|-------|
+| 0 | ✅ COMPLETE | Commander framework setup | cursor/step-0-commander-framework-6507 | ⚠️ NO PR | Merged to main without PR (workflow gap) |
+| 1 | ✅ COMPLETE | Create wrapper repo skeleton | cursor/step-1-wrapper-skeleton-6507 | ⚠️ NO PR | Merged to main without PR (workflow gap) |
+| 2 | ✅ COMPLETE | Add Docker Compose for Kotaemon | cursor/step-2-docker-compose-6507 | #5 ✅ | PR workflow correctly followed |
+| 3 | ⬜ PENDING | Add Ollama setup script | | | |
+| 4 | ⬜ PENDING | Add Ollama smoke test script | | | |
+| 5 | ⬜ PENDING | Add preflight script | | | |
+| 6 | ⬜ PENDING | Add Makefile shortcuts | | | |
+| 7 | ⬜ PENDING | Add sample support data | | | |
+| 8 | ⬜ PENDING | Add support prompt pack | | | |
+| 9 | ⬜ PENDING | Add ops, MSP/IT, and RFP prompt packs | | | |
+| 10 | ⬜ PENDING | Add local setup docs | | | |
+| 11 | ⬜ PENDING | Add Kotaemon model setup docs | | | |
+| 12 | ⬜ PENDING | Add customer onboarding docs | | | |
+| 13 | ⬜ PENDING | Add source quality checklist | | | |
+| 14 | ⬜ PENDING | Add demo script | | | |
+| 15 | ⬜ PENDING | Add acceptance tests doc | | | |
+| 16 | ⬜ PENDING | Add eval question set | | | |
+| 17 | ⬜ PENDING | Add document preparation script | | | |
+| 18 | ⬜ PENDING | Add reset-local-data script | | | |
+| 19 | ⬜ PENDING | Add troubleshooting guide | | | |
+| 20 | ⬜ PENDING | Add pilot playbook | | | |
+| 21 | ⬜ PENDING | Add data handling guide | | | |
+| 22 | ⬜ PENDING | Update README as main control panel | | | |
+| 23 | ⬜ PENDING | Full MVP run acceptance | | | |
 
 ## Key Principles
 
@@ -119,4 +127,17 @@ Use Plan Mode first.
 - Always check acceptance criteria before marking a step complete
 - Never skip the verifier step
 - Commit only after PASS
+- **Always create PR before marking step complete** ← Enforcement added after Steps 0-1 gap
 - One step at a time, no exceptions
+
+## Historical Note: Steps 0-1 Workflow Gap
+
+Steps 0 and 1 were completed and merged to main **without creating PRs**. This violated the intended workflow:
+- ✅ Commits were made with proper messages
+- ✅ Feature branches were created and pushed
+- ❌ **PRs were never created** (workflow enforcement gap)
+- The commits were merged directly to main, preventing PR review
+
+This gap was identified on 2026-05-14 and the workflow has been strengthened to prevent recurrence. See updated `.cursor/rules/mvp-commander.mdc` and `Overview/prompts.md` for enforcement changes.
+
+**Lesson:** "Step complete" must include PR creation, not just commit + push.
