@@ -1,0 +1,35 @@
+# Git ignore patterns
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Docker
+ktem_app_data/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets
+.env
+*.key
+*.pem
+
+# Temp
+tmp/
+temp/
+*.tmp
