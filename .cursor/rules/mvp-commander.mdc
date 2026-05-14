@@ -1,0 +1,74 @@
+---
+alwaysApply: true
+---
+
+# MVP Commander Rule
+
+This repo builds a local-first RAG/document-QA MVP using existing open-source tools.
+
+## Non-negotiables
+
+- Use the PDR as the source of truth: `Overview/finalized_local_first_support_kb_pdr.md`.
+- Implement exactly one PDR step at a time.
+- Never move to the next step unless the user explicitly approves.
+- Do not build a custom RAG system unless the PDR explicitly requires it.
+- Prefer existing OSS capabilities from Kotaemon, Ollama, MarkItDown, Docker, and scripts.
+- Do not add paid LLM API requirements for the default path.
+- Default LLM must be Ollama-compatible.
+- Default embedding model must be local/Ollama-compatible.
+- Do not add Google Drive, Slack, Jira, Zendesk, or other API integrations in v0.
+- Do not run destructive commands without explicit user approval.
+- Do not delete files, reset git history, force-push, or wipe data without explicit approval.
+
+## Required workflow for every PDR step
+
+For each step:
+
+1. Read the step from the PDR.
+2. Restate the goal.
+3. Produce a short implementation plan.
+4. Wait for user approval before coding if the user asked for Plan Mode.
+5. Implement only that step.
+6. Run the step's acceptance checks.
+7. Report:
+   - files changed
+   - commands run
+   - test/check results
+   - what passed
+   - what failed
+   - what was not done
+   - risks or assumptions
+8. Stop.
+
+## Output format after every step
+
+Return this exact report:
+
+### Step Result
+
+Status: PASS / FAIL / PARTIAL
+
+PDR step:
+...
+
+Files changed:
+...
+
+Commands run:
+...
+
+Acceptance checks:
+- [ ] ...
+- [ ] ...
+
+Evidence:
+...
+
+Manual check for user:
+...
+
+Known risks:
+...
+
+Recommended next prompt:
+...
