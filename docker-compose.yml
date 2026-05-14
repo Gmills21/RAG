@@ -1,2 +1,31 @@
-# Docker Compose configuration for Kotaemon
-# This will be implemented in Step 2
+version: '3.8'
+
+services:
+  kotaemon:
+    image: ghcr.io/cinnamon/kotaemon:main-full
+    container_name: kotaemon
+    ports:
+      # Bind to localhost only for local development
+      - "${KOTAEMON_PORT:-127.0.0.1:7860}:7860"
+    environment:
+      # Gradio server configuration
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - GRADIO_SERVER_PORT=7860
+    volumes:
+      # Persist Kotaemon app data
+      - ./ktem_app_data:/app/ktem_app_data
+      # Mount sample data as read-only for demos
+      - ./sample-data:/app/sample-data:ro
+    extra_hosts:
+      # Allow Linux Docker to resolve host.docker.internal to host machine
+      # Required for Kotaemon container to connect to Ollama running on host
+      # Ollama connection URL from inside container: http://host.docker.internal:11434/v1/
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+# Notes:
+# - This configuration is for LOCAL TESTING ONLY
+# - Ollama must be running on the host machine at port 11434
+# - Configure Kotaemon to use: http://host.docker.internal:11434/v1/
+# - For pilot deployments, use: docker compose -f docker-compose.yml -f docker-compose.pilot.yml
+# - No VPS, VPN, reverse proxy, or customer infrastructure required for local testing

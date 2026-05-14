@@ -1,2 +1,48 @@
-# Docker Compose pilot configuration
-# This will be implemented in Step 2
+version: '3.8'
+
+# Pilot deployment override for single-customer VPS
+# Usage: docker compose -f docker-compose.yml -f docker-compose.pilot.yml up -d
+
+services:
+  kotaemon:
+    # Port 7860 is bound to 127.0.0.1 (localhost only) from base config
+    # This is SAFE: localhost is not accessible from outside the VPS
+    # Public access is ONLY through Caddy reverse proxy on ports 80/443
+    # Raw port 7860 is NOT exposed publicly
+    # Kotaemon communicates with Caddy through the internal Docker network
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy-proxy
+    ports:
+      # Only the reverse proxy is exposed publicly
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Caddy configuration
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Caddy data for automatic HTTPS certificates
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      # Public hostname from environment
+      - PUBLIC_HOST=${PUBLIC_HOST:-example.com}
+      # Optional basic auth credentials
+      - BASIC_AUTH_USER=${BASIC_AUTH_USER:-}
+      - BASIC_AUTH_HASH=${BASIC_AUTH_HASH:-}
+    restart: unless-stopped
+    depends_on:
+      - kotaemon
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+# Notes:
+# - This configuration is for DEDICATED SINGLE-CUSTOMER VPS ONLY
+# - NOT for local testing - use docker-compose.yml alone for local work
+# - Copy .env.pilot.example to .env and configure PUBLIC_HOST
+# - Generate basic auth hash with: caddy hash-password
+# - Kotaemon port 7860 is NOT exposed - access only through Caddy HTTPS
+# - Use one VPS per customer for first pilots
+# - Keep customer data in customer-specific folders
