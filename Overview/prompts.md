@@ -74,7 +74,7 @@ Complete **Step 0** once, before any PDR implementation step. It creates the com
 
 ### Prompt 1 — Step 0: create commander files (GATE: PLAN + IMPLEMENT)
 
-We are building the Local RAG MVP from @local_rag_mvp_pdr_cursor.md.
+We are building the Local RAG MVP from @Overview/finalized_local_first_support_kb_pdr.md.
 
 Before implementing the MVP, create the Cursor operating framework for this repo.
 
@@ -118,7 +118,7 @@ This repo builds a local-first RAG/document-QA MVP using existing open-source to
 
 ## Non-negotiables
 
-- Use the PDR as the source of truth: `local_rag_mvp_pdr_cursor.md`.
+- Use the PDR as the source of truth: `Overview/finalized_local_first_support_kb_pdr.md`.
 - Implement exactly one PDR step at a time.
 - Never move to the next step unless the user explicitly approves.
 - Do not build a custom RAG system unless the PDR explicitly requires it.
@@ -198,7 +198,7 @@ Your job is not to build. Your job is to inspect, test, and challenge the implem
 
 For the requested PDR step:
 
-1. Read `local_rag_mvp_pdr_cursor.md`.
+1. Read `Overview/finalized_local_first_support_kb_pdr.md`.
 2. Identify the exact acceptance checks for the step.
 3. Inspect the git diff.
 4. Run relevant commands.
@@ -243,13 +243,13 @@ Proceed to **PDR Step 1** and run **Prompts 2–7** for that step.
 
 Repeat for each PDR step: **5** prompts on the happy path; add **Prompt 5** + re-run **Prompt 4** per verify-fail cycle.
 
-Replace `[X]` with the step number and `[STEP NAME]` with the step title from `local_rag_mvp_pdr_cursor.md`.
+Replace `[X]` with the step number and `[STEP NAME]` with the step title from `Overview/finalized_local_first_support_kb_pdr.md`.
 
 **Order per PDR step:** Prompt 2 → Prompt 3 → *(implement in same chat)* → Prompt 4 → *(if FAIL: Prompt 5, then Prompt 4 again)* → Prompt 6 → Prompt 7.
 
 ### Prompt 2 — GATE 1: PLAN (planning prompt)
 
-We are on PDR Step [X]: [STEP NAME] from @local_rag_mvp_pdr_cursor.md.
+We are on PDR Step [X]: [STEP NAME] from @Overview/finalized_local_first_support_kb_pdr.md.
 
 Use Plan Mode first.
 
@@ -297,7 +297,7 @@ Verify PDR Step [X]: [STEP NAME].
 Do not implement new features unless a fix is required and I explicitly approve it.
 
 Tasks:
-- Read @local_rag_mvp_pdr_cursor.md for Step [X].
+- Read @Overview/finalized_local_first_support_kb_pdr.md for Step [X].
 - Inspect the current git diff.
 - Run the relevant acceptance checks.
 - Confirm the implementation stayed in scope.
