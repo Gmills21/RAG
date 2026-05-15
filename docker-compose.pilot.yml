@@ -1,4 +1,4 @@
-version: '3.8'
+# Compose Specification (no top-level `version:` — obsolete in Docker Compose v2+)
 
 # Pilot deployment override for single-customer VPS
 # Usage: docker compose -f docker-compose.yml -f docker-compose.pilot.yml up -d
