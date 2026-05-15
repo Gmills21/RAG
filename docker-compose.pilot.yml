@@ -1,5 +1,3 @@
-version: '3.8'
-
 # Pilot deployment override for single-customer VPS
 # Usage: docker compose -f docker-compose.yml -f docker-compose.pilot.yml up -d
 

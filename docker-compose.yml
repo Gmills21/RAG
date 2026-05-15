@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   kotaemon:
     image: ghcr.io/cinnamon/kotaemon:main-full
