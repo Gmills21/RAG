@@ -162,19 +162,17 @@ Single-Customer VPS
 
 #### Problem:
 - `Overview/README.md` contained only "# RAG" (useless)
-- `Overview/prompts.md` (450+ lines) was commander instructions, not overview
-- Confusion about where to find what
+- ~~`Overview/prompts.md` needed to stay with PDR~~
 
 #### Solution:
 - ✅ **Deleted:** `Overview/README.md` (useless file)
-- ✅ **Moved:** `Overview/prompts.md` → `.cursor/prompts.md` (better home)
-- ✅ **Updated:** `COMMANDER.md` to reference new location
-- ✅ **Result:** `Overview/` now contains only the PDR (single source of truth)
+- ✅ **Kept:** `Overview/prompts.md` stays with PDR (they work as a pair)
+- ✅ **Result:** `Overview/` contains PDR + prompts (commander framework docs together)
 
 #### Impact:
-- Overview folder is now focused and clear
-- Commander prompts are with other Cursor configuration
-- No duplicate or confusing documentation
+- Overview folder contains PDR + prompts (commander framework together)
+- Agents can easily find both files they need
+- No confusion about where to look for step-by-step guidance
 
 ---
 
@@ -364,13 +362,14 @@ Completely rewrote README.md (332 lines) with:
 6 files changed, 364 insertions(+), 25 deletions(-)
 
 Modified:
-├── COMMANDER.md               (+3/-3 lines)
-├── README.md                  (+273/-17 lines)
+├── COMMANDER.md               (restored prompts.md reference to Overview/)
+├── README.md                  (updated to show prompts.md in Overview/)
+├── CLEANUP_REVIEW_REPORT.md   (corrected to reflect prompts.md stays in Overview/)
 ├── docker-compose.yml         (-2 lines)
 └── docker-compose.pilot.yml   (-2 lines)
 
-Moved:
-└── Overview/prompts.md → .cursor/prompts.md
+Kept in Overview/:
+└── Overview/prompts.md        (stays with PDR - they work as a pair)
 
 Deleted:
 └── Overview/README.md         (-1 line)

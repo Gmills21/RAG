@@ -197,12 +197,12 @@ support-knowledge-bot/
 │   └── manual_eval_sheet.md         ← Step 16: Manual QA template
 │
 ├── 📂 Overview/                     ← Project planning docs
-│   └── finalized_local_first_support_kb_pdr.md  ← The PDR (all 23 steps)
+│   ├── finalized_local_first_support_kb_pdr.md  ← The PDR (all 23 steps)
+│   └── prompts.md                   ← Commander prompts (use with PDR)
 │
 ├── ⚙️ .cursor/                      ← Cursor AI configuration
 │   ├── rules/mvp-commander.mdc      ← One-step-at-a-time enforcement
-│   ├── agents/verifier.md           ← Step verification subagent
-│   └── prompts.md                   ← Commander prompt library
+│   └── agents/verifier.md           ← Step verification subagent
 │
 └── 🛠️ Makefile                      ← Step 6: Command shortcuts (placeholder)
 ```
@@ -384,10 +384,14 @@ This project follows the PDR (Product Design Requirements) in `Overview/finalize
 
 **Development Workflow:**
 1. Each PDR step must pass acceptance criteria before moving forward
-2. Use Plan Mode before implementing each step
-3. Run verifier subagent after implementation
-4. Commit only after PASS status
-5. See `COMMANDER.md` for detailed workflow
+2. Read `Overview/finalized_local_first_support_kb_pdr.md` for the step requirements
+3. Use prompts from `Overview/prompts.md` to guide implementation
+4. Use Plan Mode before implementing each step
+5. Run verifier subagent after implementation
+6. Commit only after PASS status
+7. See `COMMANDER.md` for detailed workflow
+
+**Note:** The PDR and prompts files work together as a pair - agents should reference both.
 
 **Key Principles:**
 - Prefer existing OSS over custom code
