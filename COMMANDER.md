@@ -52,27 +52,27 @@ Then move to next step.
 | 0 | ✅ COMPLETE | Commander framework setup | cursor/step-0-commander-framework-6507 | - |
 | 1 | ✅ COMPLETE | Create wrapper repo skeleton | cursor/step-1-wrapper-skeleton-6507 | - |
 | 2 | ✅ COMPLETE | Add Docker Compose for Kotaemon | cursor/step-2-docker-compose-6507 | #5 |
-| 3 | ⬜ PENDING | Add Ollama setup script |
-| 4 | ⬜ PENDING | Add Ollama smoke test script |
-| 5 | ⬜ PENDING | Add preflight script |
-| 6 | ⬜ PENDING | Add Makefile shortcuts |
-| 7 | ⬜ PENDING | Add sample support data |
-| 8 | ⬜ PENDING | Add support prompt pack |
-| 9 | ⬜ PENDING | Add ops, MSP/IT, and RFP prompt packs |
-| 10 | ⬜ PENDING | Add local setup docs |
-| 11 | ⬜ PENDING | Add Kotaemon model setup docs |
-| 12 | ⬜ PENDING | Add customer onboarding docs |
-| 13 | ⬜ PENDING | Add source quality checklist |
-| 14 | ⬜ PENDING | Add demo script |
-| 15 | ⬜ PENDING | Add acceptance tests doc |
-| 16 | ⬜ PENDING | Add eval question set |
-| 17 | ⬜ PENDING | Add document preparation script |
-| 18 | ⬜ PENDING | Add reset-local-data script |
-| 19 | ⬜ PENDING | Add troubleshooting guide |
-| 20 | ⬜ PENDING | Add pilot playbook |
-| 21 | ⬜ PENDING | Add data handling guide |
-| 22 | ⬜ PENDING | Update README as main control panel |
-| 23 | ⬜ PENDING | Full MVP run acceptance |
+| 3 | ⬜ PENDING | Add Ollama setup script | - | - |
+| 4 | ⬜ PENDING | Add Ollama smoke test script | - | - |
+| 5 | ⬜ PENDING | Add preflight script | - | - |
+| 6 | ⬜ PENDING | Add Makefile shortcuts | - | - |
+| 7 | ⬜ PENDING | Add sample support data | - | - |
+| 8 | ⬜ PENDING | Add support prompt pack | - | - |
+| 9 | ⬜ PENDING | Add ops, MSP/IT, and RFP prompt packs | - | - |
+| 10 | ⬜ PENDING | Add local setup docs | - | - |
+| 11 | ⬜ PENDING | Add Kotaemon model setup docs | - | - |
+| 12 | ⬜ PENDING | Add customer onboarding docs | - | - |
+| 13 | ⬜ PENDING | Add source quality checklist | - | - |
+| 14 | ⬜ PENDING | Add demo script | - | - |
+| 15 | ⬜ PENDING | Add acceptance tests doc | - | - |
+| 16 | ⬜ PENDING | Add eval question set | - | - |
+| 17 | ⬜ PENDING | Add document preparation script | - | - |
+| 18 | ⬜ PENDING | Add reset-local-data script | - | - |
+| 19 | ⬜ PENDING | Add troubleshooting guide | - | - |
+| 20 | ⬜ PENDING | Add pilot playbook | - | - |
+| 21 | ⬜ PENDING | Add data handling guide | - | - |
+| 22 | ⬜ PENDING | Update README as main control panel | - | - |
+| 23 | ⬜ PENDING | Full MVP run acceptance | - | - |
 
 ## Key Principles
 
