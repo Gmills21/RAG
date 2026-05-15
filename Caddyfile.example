@@ -1,40 +1,27 @@
-# Caddyfile for Kotaemon single-customer VPS pilot deployment
-# Copy this to ./Caddyfile and configure for your customer
+# Caddyfile for a single-customer Kotaemon pilot deployment.
+# Copy this to ./Caddyfile and configure PUBLIC_HOST plus BASIC_AUTH_* in .env.
 
-# Replace with your actual domain
 {$PUBLIC_HOST:example.com} {
-    # Automatic HTTPS via Let's Encrypt
-    
-    # Optional: Enable basic authentication
-    # Uncomment and configure after generating password hash with:
-    # docker run --rm caddy:2-alpine caddy hash-password --plaintext 'yourpassword'
-    # basicauth {
-    #     {$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
-    # }
-    
-    # Reverse proxy to Kotaemon on private Docker network
+    # Required for first pilots. Do not invite customer users until this works.
+    basicauth {
+        {$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+    }
+
+    # Reverse proxy to Kotaemon on the private Docker network.
     reverse_proxy kotaemon:7860 {
-        # Forward real client IP
         header_up X-Real-IP {remote_host}
         header_up X-Forwarded-For {remote_host}
         header_up X-Forwarded-Proto {scheme}
     }
-    
-    # Security headers
+
     header {
-        # Enable HSTS
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        # Prevent clickjacking
         X-Frame-Options "SAMEORIGIN"
-        # Prevent MIME sniffing
         X-Content-Type-Options "nosniff"
-        # Enable XSS protection
-        X-XSS-Protection "1; mode=block"
-        # Remove server identification
+        Referrer-Policy "no-referrer"
         -Server
     }
-    
-    # Logging
+
     log {
         output file /var/log/caddy/access.log
         format json
@@ -42,11 +29,8 @@
 }
 
 # Notes:
-# - This configuration is for DEDICATED SINGLE-CUSTOMER VPS ONLY
-# - Do NOT use for local testing
-# - Raw Kotaemon port 7860 is NOT exposed to the public internet
-# - Access is only through this HTTPS reverse proxy
-# - Configure PUBLIC_HOST in .env before deployment
-# - Enable basic auth for additional access control
-# - Use encrypted disk where available from infrastructure provider
-# - One VPS per customer for first pilots
+# - This configuration is for a dedicated single-customer VPS only.
+# - Do not use it for local testing.
+# - Raw Kotaemon port 7860 must not be exposed to the public internet.
+# - Access is through HTTPS plus basic auth unless stronger customer-approved auth is added.
+# - One VPS per customer for first pilots.

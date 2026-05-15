@@ -22,5 +22,5 @@ embeddings:
 
 notes:
   - Required before external prospect demos.
-  - Pre-index sample-data before live demos; run ./scripts/benchmark_query_sla.sh
+  - Pre-index sample-data before live demos; time standard demo questions manually until an automated benchmark exists.
   - Re-index if switching from dev-ollama embeddings.

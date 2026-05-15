@@ -3,7 +3,7 @@
 Get the Support Knowledge Bot running on your laptop for development and internal testing. No VPS, VPN, reverse proxy, Caddy, customer domain, or customer infrastructure required.
 
 > **Inference profile for this guide:** `dev-ollama` (local Ollama on your laptop).  
-> **Not for demos or pilots.** External demos should use the `demo-hosted` profile with a hosted API. See [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md) and [docs/KOTAEMON_MODEL_SETUP.md](KOTAEMON_MODEL_SETUP.md) for hosted setup.
+> **Not for demos or pilots.** External demos should use `demo-hosted`; paid pilots should use `pilot-hosted` unless private GPU is required. See [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md) and [docs/KOTAEMON_MODEL_SETUP.md](KOTAEMON_MODEL_SETUP.md).
 
 ---
 
@@ -95,7 +95,7 @@ ollama list
 
 You should see all three models listed.
 
-> **Note:** `setup_ollama.sh` is for the `dev-ollama` profile only. For demo or pilot, apply the hosted profile instead — see [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md).
+> **Note:** `setup_ollama.sh` is for the `dev-ollama` profile only. For demos use `demo-hosted`; for paid pilots use `pilot-hosted`.
 
 ---
 
@@ -365,7 +365,7 @@ Then open `http://localhost:7861`.
 
 **Likely cause:** Running a 4B parameter model on CPU without a GPU. This is expected on laptop hardware.
 
-**This is not a bug.** The `dev-ollama` profile is for local development only — it is not sold as production latency. For demos and pilots, use the `demo-hosted` profile with a hosted API (see [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md)).
+**This is not a bug.** The `dev-ollama` profile is for personal/local testing only. For demos use `demo-hosted`; for paid pilots use `pilot-hosted` (see [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md)).
 
 **Mitigation for dev work:**
 - Switch to the smaller fallback model `qwen3:1.7b` in Kotaemon Resources for faster iteration.
@@ -424,5 +424,5 @@ make smoke      # run Ollama smoke test
 - [docs/KOTAEMON_MODEL_SETUP.md](KOTAEMON_MODEL_SETUP.md) — detailed model config for all inference profiles
 - [docs/DEMO_SCRIPT.md](DEMO_SCRIPT.md) — run a structured 10-minute demo
 - [docs/CUSTOMER_ONBOARDING.md](CUSTOMER_ONBOARDING.md) — onboard a pilot customer
-- [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md) — switch to `demo-hosted` for prospect demos
+- [docs/INFERENCE_PROFILES.md](INFERENCE_PROFILES.md) — switch to `demo-hosted` for prospect demos or `pilot-hosted` for paid pilots
 - [docs/TROUBLESHOOTING.md](TROUBLESHOOTING.md) — extended troubleshooting guide

@@ -1,5 +1,5 @@
 # Profile: pilot-private-gpu
-# Use case: Customer forbids cloud LLM; Ollama/vLLM on GPU VPS
+# Use case: Customer forbids hosted inference; Ollama/vLLM on GPU VPS
 # Kotaemon vendor: ChatOpenAI (OpenAI-compatible)
 
 profile: pilot-private-gpu
@@ -8,7 +8,7 @@ llm:
   vendor: ChatOpenAI
   api_key_env: OLLAMA_API_KEY
   api_key_example: ollama
-  base_url: http://127.0.0.1:11434/v1/
+  base_url: http://host.docker.internal:11434/v1/
   model: qwen3:8b
   # Replace with customer-sized instruct model available on GPU VPS
 
@@ -16,10 +16,12 @@ embeddings:
   vendor: ChatOpenAI
   api_key_env: OLLAMA_API_KEY
   api_key_example: ollama
-  base_url: http://127.0.0.1:11434/v1/
+  base_url: http://host.docker.internal:11434/v1/
   model: nomic-embed-text
 
 notes:
-  - Run Ollama on the VPS GPU, not on founder laptop.
+  - Run the model server on the VPS GPU, not on founder laptop.
+  - From the Kotaemon Docker container, use host.docker.internal when the model server runs on the VPS host.
+  - If the model server is another Docker service, replace base_url with that service URL.
   - Size GPU and model for < 30s cited-query SLA where sold.
   - Re-index after embedding model change.

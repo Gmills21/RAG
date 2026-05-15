@@ -20,5 +20,5 @@ embeddings:
 
 notes:
   - Default for dedicated single-customer VPS pilots.
-  - Disclose cloud LLM data handling per docs/DATA_HANDLING.md
+  - Disclose hosted inference data handling per docs/DATA_HANDLING.md
   - Re-index customer docs after profile switch or embedding model change.
