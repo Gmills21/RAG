@@ -53,9 +53,9 @@ Then move to next step.
 | 1 | ✅ COMPLETE | Create wrapper repo skeleton | cursor/step-1-wrapper-skeleton-6507 | - |
 | 2 | ✅ COMPLETE | Add Docker Compose for Kotaemon | cursor/step-2-docker-compose-6507 | #5 |
 | 3 | ✅ COMPLETE | Add Ollama setup script | cursor/step-3-ollama-setup-6507 | #15 |
-| 4 | ⬜ PENDING | Add Ollama smoke test script |
-| 5 | ⬜ PENDING | Add preflight script |
-| 6 | ⬜ PENDING | Add Makefile shortcuts |
+| 4 | ✅ COMPLETE | Add Ollama smoke test script | cursor/step-4-ollama-smoke-test-9c3f | #18 |
+| 5 | ✅ COMPLETE | Add preflight script | cursor/step-5-preflight-script-9c3f | #19 |
+| 6 | ✅ COMPLETE | Add Makefile shortcuts | cursor/step-6-makefile-shortcuts-9c3f | #20 |
 | 7 | ⬜ PENDING | Add sample support data |
 | 8 | ⬜ PENDING | Add support prompt pack |
 | 9 | ⬜ PENDING | Add ops, MSP/IT, and RFP prompt packs |
@@ -102,13 +102,13 @@ Then move to next step.
 
 ## Next Step
 
-You have completed **Step 0** (Commander framework setup).
+You have completed **Steps 0-6** (commander framework + scaffolding + Docker Compose + Ollama setup/smoke/preflight scripts + Makefile shortcuts).
 
-**Next:** Proceed to PDR Step 1 using Prompts 2-7 from `Overview/prompts.md`.
+**Next:** Proceed to PDR Step 7 (Add sample support data) using Prompts 2-7 from `Overview/prompts.md`.
 
 Start with:
 ```
-We are on PDR Step 1: Create the wrapper repo skeleton from @Overview/finalized_local_first_support_kb_pdr.md.
+We are on PDR Step 7: Add sample support data from @Overview/finalized_local_first_support_kb_pdr.md.
 
 Use Plan Mode first.
 ...
