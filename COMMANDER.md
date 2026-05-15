@@ -10,9 +10,9 @@ The Commander framework enforces **one-step-at-a-time development** for the Loca
 
 1. **`.cursor/rules/mvp-commander.mdc`** — Always-on project rule that prevents moving ahead without approval
 2. **`.cursor/agents/verifier.md`** — Independent verification subagent that checks each step
-3. **`COMMANDER.md`** (this file) — Progress tracker and usage guide
-4. **`Overview/finalized_local_first_support_kb_pdr.md`** — The PDR (Product Design Requirements) with all 23 steps
-5. **`Overview/prompts.md`** — The prompt pack with all commander prompts
+3. **`.cursor/prompts.md`** — The prompt pack with all commander prompts (reference only)
+4. **`COMMANDER.md`** (this file) — Progress tracker and usage guide
+5. **`Overview/finalized_local_first_support_kb_pdr.md`** — The PDR (Product Design Requirements) with all 23 steps
 
 ## How to Use
 
@@ -104,7 +104,7 @@ Then move to next step.
 
 You have completed **Step 0** (Commander framework setup).
 
-**Next:** Proceed to PDR Step 1 using Prompts 2-7 from `Overview/prompts.md`.
+**Next:** Proceed to PDR Step 3 using Prompts 2-7 from `.cursor/prompts.md` (if following the commander framework).
 
 Start with:
 ```
