@@ -1,0 +1,24 @@
+# Profile: pilot-hosted
+# Use case: First paid pilots (default); same stack as demo-hosted
+# Kotaemon vendor: ChatOpenAI
+
+profile: pilot-hosted
+
+llm:
+  vendor: ChatOpenAI
+  api_key_env: OPENAI_API_KEY
+  base_url: https://api.openai.com/v1/
+  model: gpt-4o-mini
+  # Use customer-approved endpoint when required:
+  # base_url: https://customer-approved-endpoint/v1/
+
+embeddings:
+  vendor: ChatOpenAI
+  api_key_env: OPENAI_API_KEY
+  base_url: https://api.openai.com/v1/
+  model: text-embedding-3-small
+
+notes:
+  - Default for dedicated single-customer VPS pilots.
+  - Disclose cloud LLM data handling per docs/DATA_HANDLING.md
+  - Re-index customer docs after profile switch or embedding model change.
