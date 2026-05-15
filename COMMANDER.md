@@ -52,7 +52,7 @@ Then move to next step.
 | 0 | ✅ COMPLETE | Commander framework setup | cursor/step-0-commander-framework-6507 | - |
 | 1 | ✅ COMPLETE | Create wrapper repo skeleton | cursor/step-1-wrapper-skeleton-6507 | - |
 | 2 | ✅ COMPLETE | Add Docker Compose for Kotaemon | cursor/step-2-docker-compose-6507 | #5 |
-| 3 | ⬜ PENDING | Add Ollama setup script |
+| 3 | ✅ COMPLETE | Add Ollama setup script | cursor/step-3-ollama-setup-6507 | #15 |
 | 4 | ⬜ PENDING | Add Ollama smoke test script |
 | 5 | ⬜ PENDING | Add preflight script |
 | 6 | ⬜ PENDING | Add Makefile shortcuts |
