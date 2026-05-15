@@ -7,15 +7,18 @@ This document is the **commander framework** for taking an agent through the Loc
 **Gates for every PDR step (order):**
 
 1. PLAN  
-2. APPROVE  
-3. IMPLEMENT  
-4. VERIFY  
-5. FIX IF NEEDED  
-6. MANUAL CHECK  
-7. COMMIT  
-8. NEXT STEP  
+2. **CLARIFY IF NEEDED** (new — see Gate 1.5 below)  
+3. APPROVE  
+4. IMPLEMENT  
+5. VERIFY  
+6. FIX IF NEEDED  
+7. MANUAL CHECK  
+8. COMMIT  
+9. NEXT STEP  
 
 **Rule:** Cursor is not allowed to move to the next PDR step until the current step passes.
+
+**Clarification rule (applies to every prompt below):** If, while reading the prompt or executing it, Cursor identifies an essential detail that is missing, ambiguous, contradicted by repo state, or has multiple reasonable interpretations that would lead to materially different implementations, Cursor MUST stop and ask using the format defined in `.cursor/rules/mvp-commander.mdc` "Clarification gate" section. Guessing on essentials is a defect, not a feature. Asking is required.
 
 **Stack reminder (paste or keep in rules):** Do not build custom RAG. Do not invent a product. Wire together Kotaemon + Ollama + docs + scripts.
 
@@ -26,7 +29,7 @@ This document is the **commander framework** for taking an agent through the Loc
 | Group | Name | Prompt numbers | When you use it |
 |-------|------|----------------|-----------------|
 | **Group 1** | **Step 0 prompt** | **1** | **Once** before PDR Step 1 — creates commander guardrails only. |
-| **Group 2** | **Standard prompts** | **2 → 7** | **Every** PDR Step **1–23**, in order. **Prompt 5** only if **Prompt 4** (verifier) returns **FAIL**; then re-run **Prompt 4** until PASS. **GATE 3** (implement) and **GATE 8** (next step) are not separate pastes. |
+| **Group 2** | **Standard prompts** | **2 → 7** (plus **2.5** when needed) | **Every** PDR Step **1–23**, in order. **Prompt 2.5** only if **Prompt 2** raised open questions (clarification gate). **Prompt 5** only if **Prompt 4** (verifier) returns **FAIL**; then re-run **Prompt 4** until PASS. **GATE 3** (implement) and **GATE 8** (next step) are not separate pastes. |
 | **Group 3** | **Review prompts** (optional) | **8, 9, 10** | When you need **recovery or audit**, not on every step: **8** — scope / overbuild; **9** — paid API drift after touching models, env, Docker, config, or docs; **10** — citation / grounding once the app runs. |
 | **Group 4** | **PDR Step 23 / MVP completion prompt** | **11** | **Once** after **PDR Step 23** passes — skeptical “is this demoable?” review. |
 
@@ -39,23 +42,25 @@ This document is the **commander framework** for taking an agent through the Loc
 | Group / when | Prompt numbers you use (in order) | How many prompts |
 |----------------|-----------------------------------|------------------|
 | **Group 1 — Step 0** | Prompt 1 only | **1** |
-| **Group 2 — each PDR Step 1–23** (happy path) | Prompt 2 → Prompt 3 → Prompt 4 → Prompt 6 → Prompt 7 | **5** |
+| **Group 2 — each PDR Step 1–23** (happy path, no open questions) | Prompt 2 → Prompt 3 → Prompt 4 → Prompt 6 → Prompt 7 | **5** |
+| **Group 2 — each PDR Step 1–23** (with open questions raised in PLAN) | Prompt 2 → **Prompt 2.5** → Prompt 3 → Prompt 4 → Prompt 6 → Prompt 7 | **6** |
 | **Group 2 — each PDR Step 1–23** (if verify fails) | After Prompt 4 fails: **Prompt 5**, then **Prompt 4** again; repeat until PASS; then **Prompt 6 → Prompt 7** | **5 + 2n** paste prompts, where **n** = number of fail cycles *(each cycle is one Prompt 5 and one re-run of Prompt 4)* |
 | **Group 3 — Review** (optional) | Prompt 8 — overbuild / re-scope | **0 or 1** per incident |
 | **Group 3 — Review** (optional) | Prompt 9 — paid API audit | **0 or 1** |
 | **Group 3 — Review** (optional) | Prompt 10 — citation / source preview | **0 or 1** when testing grounding |
 | **Group 4 — after PDR Step 23 passes** | Prompt 11 — demo readiness | **1** |
 
-**Unique paste prompts in this file:** **Prompt 1** through **Prompt 11** (eleven definitions). **Group 2** reuses Prompts **2–7** on every PDR step; **Group 1** uses Prompt **1** once.
+**Unique paste prompts in this file:** **Prompt 1** through **Prompt 11**, plus **Prompt 2.5** (twelve definitions total). **Group 2** reuses Prompts **2–7** on every PDR step (and **2.5** whenever the PLAN raised open questions); **Group 1** uses Prompt **1** once.
 
-**Gate mapping:** Prompt 2 = PLAN · Prompt 3 = APPROVE (+ kicks off IMPLEMENT) · Prompt 4 = VERIFY · Prompt 5 = FIX IF NEEDED · Prompt 6 = MANUAL CHECK · Prompt 7 = COMMIT · then NEXT STEP (no paste).
+**Gate mapping:** Prompt 2 = PLAN · **Prompt 2.5 = CLARIFY IF NEEDED** · Prompt 3 = APPROVE (+ kicks off IMPLEMENT) · Prompt 4 = VERIFY · Prompt 5 = FIX IF NEEDED · Prompt 6 = MANUAL CHECK · Prompt 7 = COMMIT · then NEXT STEP (no paste).
 
-### Prompt catalog (all **11** paste prompts)
+### Prompt catalog (all **12** paste prompts)
 
 | Group | # | When to use |
 |-------|---|-------------|
 | **1 — Step 0** | **Prompt 1** | Once — create commander files |
-| **2 — Standard** | **Prompt 2** | Every PDR step — plan (before code) |
+| **2 — Standard** | **Prompt 2** | Every PDR step — plan (before code); MUST include Open Questions section |
+| **2 — Standard** | **Prompt 2.5** | Only if Prompt 2 raised open questions — pass user answers back, agent updates plan |
 | **2 — Standard** | **Prompt 3** | Every PDR step — approve + implement kickoff |
 | **2 — Standard** | **Prompt 4** | Every PDR step — verify (often new chat + verifier subagent) |
 | **2 — Standard** | **Prompt 5** | Only if Prompt 4 fails — minimal fix |
@@ -245,7 +250,7 @@ Repeat for each PDR step: **5** prompts on the happy path; add **Prompt 5** + re
 
 Replace `[X]` with the step number and `[STEP NAME]` with the step title from `Overview/finalized_local_first_support_kb_pdr.md`.
 
-**Order per PDR step:** Prompt 2 → Prompt 3 → *(implement in same chat)* → Prompt 4 → *(if FAIL: Prompt 5, then Prompt 4 again)* → Prompt 6 → Prompt 7.
+**Order per PDR step:** Prompt 2 → *(if open questions: Prompt 2.5)* → Prompt 3 → *(implement in same chat)* → Prompt 4 → *(if FAIL: Prompt 5, then Prompt 4 again)* → Prompt 6 → Prompt 7.
 
 ### Prompt 2 — GATE 1: PLAN (planning prompt)
 
@@ -267,9 +272,23 @@ Return:
 3. Commands you expect to run.
 4. Acceptance checks you will use.
 5. Risks or assumptions.
-6. Anything unclear.
+6. **Open Questions for the user** — REQUIRED section. Apply the clarification gate from `.cursor/rules/mvp-commander.mdc`. List every essential detail that is missing, ambiguous, contradicted by repo state, or has multiple reasonable interpretations. If there are none, say "None — every required detail is unambiguous in the PDR and repo state" and briefly explain why. Use the CLARIFICATION REQUIRED block format from the rule file. Maximum three questions; if you have more, propose a re-scope instead.
 
-Stop after the plan and wait for approval.
+Stop after the plan and wait for approval (or for clarification answers if you raised any open questions).
+
+### Prompt 2.5 — GATE 1.5: CLARIFY IF NEEDED (only if Prompt 2 raised open questions)
+
+Use only if Prompt 2 returned a non-empty "Open Questions" section. The user pastes back:
+
+Answers to your open questions:
+
+Q1: [answer — "A", "B", "you decide", or one short sentence]
+Q2: [answer]
+Q3: [answer]
+
+Update your plan to reflect these answers. Do not implement yet. Re-emit just the changed sections of the plan (Files, Commands, Acceptance checks, Risks) so I can confirm the plan still makes sense before approving.
+
+If any answer would push us outside PDR §1.3 / §2.2 scope, flag it and propose a smaller scope instead of building.
 
 ### Prompt 3 — GATE 2: APPROVE (+ kicks off GATE 3: IMPLEMENT)
 
@@ -280,7 +299,8 @@ Rules:
 - Do not add features outside this step.
 - Run the acceptance checks from the PDR.
 - If a command fails, stop and explain instead of guessing.
-- At the end, give the Step Result report required by .cursor/rules/mvp-commander.mdc.
+- **If during implementation you hit a NEW essential question that did not surface in the plan, stop and emit a CLARIFICATION REQUIRED block (format defined in `.cursor/rules/mvp-commander.mdc`). Do not commit speculative work. Revert any uncommitted speculative edits in the working tree first, then ask.**
+- At the end, give the Step Result report required by .cursor/rules/mvp-commander.mdc. Include the "Clarifying questions asked this step" and "Assumptions made" sections — never leave them blank; if there were none, explicitly say so and explain why.
 
 ### GATE 3: IMPLEMENT (no separate paste prompt)
 
