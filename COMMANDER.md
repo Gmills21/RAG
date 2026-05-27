@@ -20,12 +20,15 @@ The Commander framework enforces **one-step-at-a-time development** for the Loca
 
 Run these prompts in order:
 
-1. **Prompt 2** — PLAN: Read the step, create implementation plan
-2. **Prompt 3** — APPROVE + IMPLEMENT: Approve plan and execute
-3. **Prompt 4** — VERIFY: Use verifier subagent to check work
-4. **Prompt 5** — FIX (only if verify fails): Minimal fix, then re-verify
-5. **Prompt 6** — MANUAL CHECK: Answer 10 questions about the work
-6. **Prompt 7** — COMMIT AND PUSH: Create commit, branch, push to GitHub, create draft PR
+1. **Prompt 2** — PLAN: Read the step, create implementation plan. The plan **must** include an "Open Questions" section per the clarification gate (see below). If the agent has no questions, it must explicitly say so and explain why.
+2. **Prompt 2.5** — CLARIFY (only if Prompt 2 raised open questions): Paste your answers back, agent updates the plan.
+3. **Prompt 3** — APPROVE + IMPLEMENT: Approve plan and execute. The agent may still stop mid-implementation and raise a CLARIFICATION REQUIRED block if a new essential question surfaces.
+4. **Prompt 4** — VERIFY: Use verifier subagent to check work — including a check for skipped clarifications.
+5. **Prompt 5** — FIX (only if verify fails): Minimal fix, then re-verify.
+6. **Prompt 6** — MANUAL CHECK: Answer 10 questions about the work.
+7. **Prompt 7** — COMMIT AND PUSH: Create commit, branch, push to GitHub, create draft PR.
+
+**Clarification gate (applies to every step):** If at any point the agent identifies an essential detail that is missing, ambiguous, contradicted by repo state, or has multiple reasonable interpretations, the agent **must stop and ask** using the CLARIFICATION REQUIRED block format defined in `.cursor/rules/mvp-commander.mdc`. Guessing on essentials is a defect. Asking is mandatory. See `.cursor/rules/mvp-commander.mdc` → "Clarification gate" for the full trigger list, the ask template, and what the agent may and may not do while waiting for an answer.
 
 **Important:** Each step MUST be pushed to GitHub immediately after completion. This ensures:
 - Step-by-step recovery if something breaks
